@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+{% extends "publications/application.html" %}
+{% block content %}
+    {% for publication in publications %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <h4><a class="article-title" href="{% url 'publication-detail' publication.id %}"> {{ publication.title }}</a></h4>
+                     <a class="mr-2 article-title text-muted" href="{% url 'user-publications' publication.user.username %}"> Submitted by: {{ publication.user }}</a>
+                    <small class="text-muted">{{ publication.date_posted|date:"F d, Y" }}</small>
+                </div>
+                <div style="font-style: italic;">{{ publication.first_author_first_name }} {{ publication.first_author_last_name}}</div>
+                <div>Journal: {{ publication.journal_name }} {{ publication.journal_volume}}</div>
+                <img class= "rounded-circle article-img" src="{{ publication.user.profile.profile_image.url }}" style="float:left;width:120px;height:120px;">
+
+                <div><p class="article-content">{{ publication.abstract }}</p></div>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
+
+

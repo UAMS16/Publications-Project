@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  <!-- Publications App CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'publications/main.css' %}">
+
+  <style>
+  #bg {
+    background-size: 2000px 1000px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+  </style>
+
+  {% if title %}
+  <title>Publications - {{ title }}</title>
+  {% else %}
+  <title>Publications</title>
+  {% endif %}
+</head>
+
+<body id="bg" style="background-image: url('{% static 'publications/background-image3.jpg'%}')">
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <div class="container">
+        <i class="bi bi-newspaper" style="color: aliceblue; padding-right: 10px;" ></i>
+        <a class="navbar-brand mr-4" href="/">CCGR Publications</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+          aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="{% url 'publications-home' %}">Home</a>
+            <a class="nav-item nav-link" href="https://www.genome.gov/Funded-Programs-Projects/Centers-of-Excellence-in-Genomic-Science">About</a>
+            {% if user.is_authenticated %}
+            <a class="nav-item nav-link" href="{% url 'publication-create' %}">Add Publication</a>
+            <a class="nav-item nav-link" href="{% url 'profile' %}">{{ user.username }}</a>
+            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-item nav-link" href="{% url 'user-register' %}">Register</a>
+            {% endif %}
+          </div>
+          <!-- Navbar Right Side -->
+          <div class="navbar-nav ms-auto">
+            <a class="nav-item nav-link" href="http://reddylab.org/" style="font-weight: bold;"> CEGS DUKE</a>
+
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-8">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+      </div>
+      <div class="col-md-4">
+        <div class="content-section">
+          <h3>Centers of Excellence in Genomic Science <i class="bi bi-globe-americas"></i></h3>
+          <p class='text-muted'> Active CEGS Awards 2022
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-light" style="border-radius: 10px;"><i class="bi bi-award-fill"></i>Duke University(Reddy)</li>
+            <li class="list-group-item list-group-item-light" style="border-radius: 10px;"><i class="bi bi-award-fill"></i>Stanford University(Chang)</li>
+            <li class="list-group-item list-group-item-light" style="border-radius: 10px;"><i class="bi bi-award-fill"></i>University of Pennsylvania(Kim)</li>
+            <li class="list-group-item list-group-item-light" style="border-radius: 10px;"><i class="bi bi-award-fill"></i>New York Genome Center(Satija)</li>
+          </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
